@@ -39,17 +39,51 @@ public class Job {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Job)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Job job = (Job) o;
-        return id == job.id && Objects.equals(name, job.name) && Objects.equals(employer, job.employer) && Objects.equals(location, job.location) && Objects.equals(positionType, job.positionType) && Objects.equals(coreCompetency, job.coreCompetency);
+        return id == job.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, employer, location, positionType, coreCompetency);
+        return Objects.hash(id);
     }
 
-    // TODO: Add getters for each field EXCEPT nextId. Add setters for each field EXCEPT nextID
+    @Override
+    public String toString() {
+
+        if(name == "") {
+            name = "Data not available";
+        }
+
+        if(employer.getValue() == "") {
+            employer.setValue("Data not available");
+        }
+
+        if(location.getValue() == "") {
+            location.setValue("Data not available");
+        }
+        if(positionType.getValue() == "") {
+            positionType.setValue("Data not available");
+        }
+
+        if(coreCompetency.getValue() == "") {
+            coreCompetency.setValue("Data not available");
+        }
+
+
+        return "\nID: " + getId() +
+                "\nName: " + getName() +
+                "\nEmployer: " + getEmployer() +
+                "\nLocation: " + getLocation() +
+                "\nPosition Type: " + getPositionType() +
+                "\nCore Competency: " + getCoreCompetency() +
+                "\n";
+
+    }
+
+
+// TODO: Add getters for each field EXCEPT nextId. Add setters for each field EXCEPT nextID
     //  and id.
 
     public int getId() {

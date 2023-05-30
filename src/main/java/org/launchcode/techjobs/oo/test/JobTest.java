@@ -1,5 +1,6 @@
 package org.launchcode.techjobs.oo.test;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -14,10 +15,17 @@ import static org.junit.Assert.*;
 public class JobTest {
 
     @Test
-    public void testSettingJobID() {
-        Job uniqueId1 = new Job();
-        Job uniqueId2 = new Job();
+    public void testSettingJobId() {
+        Job uniqueId1 = new Job("", new Employer(""), new Location(""), new PositionType(""), new CoreCompetency(""));
+        Job uniqueId2 = new Job("", new Employer(""), new Location(""), new PositionType(""), new CoreCompetency(""));
         assertNotEquals(uniqueId1.getId(), uniqueId2.getId());
+    }
+
+    @Test
+    public void testJobsForEquality() {
+        Job testJob1 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+       Job testJob2 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+    assertFalse(testJob1 == testJob2);
     }
 
     @Test
@@ -28,15 +36,58 @@ public class JobTest {
         assertTrue(testJob1.getLocation() instanceof Location);
         assertTrue(testJob1.getPositionType() instanceof PositionType);
         assertTrue(testJob1.getCoreCompetency() instanceof CoreCompetency);
-        assertEquals(testJob1.getName(),"Product tester");
-        assertEquals(testJob1.getEmployer().toString(), "ACME");
-        assertEquals(testJob1.getLocation().toString(),"Desert");
-        assertEquals(testJob1.getPositionType().toString(),"Quality control");
-        assertEquals(testJob1.getCoreCompetency().toString(),"Persistence");
+        assertEquals("Product tester", testJob1.getName());
+        assertEquals("ACME", testJob1.getEmployer().toString());
+        assertEquals("Desert", testJob1.getLocation().toString());
+        assertEquals("Quality control", testJob1.getPositionType().toString());
+        assertEquals("Persistence", testJob1.getCoreCompetency().toString());
 
 
     }
+    @Test
+    public void testToStringStartsAndEndsWithNewLine() {
+        Job testJob2 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
 
+        String actual = testJob2.toString();
+        char firstChar = actual.charAt(0);
+        char lastChar = actual.charAt(actual.length()-1);
+
+        assertEquals('\n', firstChar);
+        assertEquals('\n', lastChar);
+        System.out.println(firstChar);
+        System.out.println(lastChar);
+    }
+    @Test
+    public void testToStringContainsCorrectLabelsAndData(){
+        Job testJob2 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+        String actual = testJob2.toString();
+
+        assertEquals("\nID: " + testJob2.getId()+
+        "\nName: " + "Product tester" +
+        "\nEmployer: " + "ACME" +
+        "\nLocation: " + "Desert" +
+        "\nPosition Type: " + "Quality control" +
+        "\nCore Competency: " + "Persistence" +
+        "\n", testJob2.toString());
+
+    }
+    @Test
+    public void testToStringHandlesEmptyField(){
+        Job testJob2 = new Job("", new Employer(""), new Location(""), new PositionType(""), new CoreCompetency(""));
+        testJob2.toString();
+
+        String name;
+        String Employer;
+        String Location;
+        String PositionType;
+        String CoreCompetency;
+
+        assertEquals(name="Data not available", testJob2.getName());
+        assertEquals(Employer="Data not available", testJob2.getEmployer().getValue());
+        assertEquals(Location="Data not available", testJob2.getLocation().getValue());
+        assertEquals(PositionType ="Data not available", testJob2.getPositionType().getValue());
+        assertEquals(CoreCompetency="Data not available", testJob2.getCoreCompetency().getValue());
+    }
 }
 
 
